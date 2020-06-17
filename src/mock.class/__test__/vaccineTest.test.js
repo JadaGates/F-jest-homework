@@ -6,7 +6,6 @@ const mockAcceptInjection = jest.fn();
 const mockHasAntibodies = jest.fn();
 
 jest.mock("../recipient", () => {
-  // mock class实现
   return jest.fn().mockImplementation(() => {
     return {
       acceptInjection: mockAcceptInjection,
@@ -16,7 +15,6 @@ jest.mock("../recipient", () => {
 });
 
 beforeEach(() => {
-  // clear mock here
   Recipient.mockClear();
   mockAcceptInjection.mockClear();
   mockHasAntibodies.mockClear();
@@ -35,10 +33,18 @@ describe("inject", () => {
 });
 
 describe("test", () => {
+  test("should call hasAntibodies", () => {
+    const vaccineTest = new VaccineTest();
+    vaccineTest.test();
+
+    expect(mockHasAntibodies).toBeCalled();
+  });
+
   test("should get Success if recipient has antibodies", () => {
     mockHasAntibodies.mockImplementation(() => true);
     const vaccineTest = new VaccineTest();
     const result = vaccineTest.test();
+
     expect(result).toEqual("Vaccine Test Success");
   });
 
@@ -46,6 +52,7 @@ describe("test", () => {
     mockHasAntibodies.mockImplementation(() => false);
     const vaccineTest = new VaccineTest();
     const result = vaccineTest.test();
+
     expect(result).toEqual("Vaccine Test Failed");
   });
 });
