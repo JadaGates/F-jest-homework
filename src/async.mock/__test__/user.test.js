@@ -13,7 +13,6 @@ describe("register", () => {
   });
 
   test("should reject with Error when username is invalid", async () => {
-    // TODO 20: add test here
     verifyUsername.mockReturnValue(false);
     const mockPwd = "mocked Pwd";
     const mockUsername = "mocked userName";
